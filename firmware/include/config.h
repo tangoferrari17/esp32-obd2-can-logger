@@ -10,7 +10,7 @@ constexpr int PIN_SPI_MOSI = 23;
 
 // ---- Chip selects (one per SPI device) ----
 constexpr int PIN_CAN_CS = 5;   // MCP2515 CS
-constexpr int PIN_SD_CS  = 13;  // microSD CS
+constexpr int PIN_SD_CS  = 15;  // microSD CS
 
 // ---- MCP2515 ----
 // Most blue MCP2515/TJA1050 modules carry an 8 MHz crystal (read the can on the board:

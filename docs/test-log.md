@@ -20,3 +20,11 @@ One entry per bench or vehicle session. Record what was tried, what happened and
 **Setup:** SD breakout soldered and wired to the shared SPI bus.
 **Result:** Read/write verified with a test sketch.
 **Next:** MCP2515 loopback self-test on hardware, then first vehicle connection.
+
+### 2026-10-09 — Bench: MCP2515 loopback + SD on shared SPI bus
+**Goal:** Confirm the MCP2515 talks to the ESP32 over SPI and that SD logging still works with both devices on the bus.
+**Setup:** MCP2515 on the shared SPI bus (SCK 18 / MISO 19 / MOSI 23), CS on GPIO 5, 8 MHz crystal, USB power. SD CS is on GPIO 15 (config.h previously assumed 13; changed to match the real wiring). CAN-H/CAN-L not connected.
+**Result:** Loopback self-test passed. After the SD CS fix the card mounted and the logger opened `/log_001.csv`. Every PID row logged as `tx_error` or `timeout`, which is expected with no bus attached. The first run failed SD init (`Card Failed! cmd 0x00`) because the firmware was selecting the wrong CS pin.
+**Not yet verified:** the CAN bitrate/crystal setting (loopback is internal and does not exercise it), and the contents of the CSV on a computer (no card reader yet).
+**Evidence:** serial output of the passing loopback and `Logging to /log_001.csv`.
+**Next:** Read the CSV on a laptop; first vehicle connection (parked, ignition on) with a real RPM response.

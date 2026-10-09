@@ -80,7 +80,7 @@ ms,pid,name,value,unit,ecu,raw_hex,status
 | GPIO 19 | MCP2515 SO, SD MISO | Shared SPI MISO |
 | GPIO 23 | MCP2515 SI, SD MOSI | Shared SPI MOSI |
 | GPIO 5 | MCP2515 CS | |
-| GPIO 13 | SD CS | |
+| GPIO 15 | SD CS | |
 | 5V / GND | MCP2515 VCC / GND, SD VCC / GND | |
 
 | OBD-II pin | Signal | Goes to |
@@ -132,7 +132,7 @@ pio device monitor             # 115200 baud
 - [x] Hardware wired on breadboard; SD module soldered, read/write verified
 - [x] OBD-II protocol layer + unit tests in CI
 - [x] Logger firmware: loopback self-test, PID polling, CSV logging
-- [ ] MCP2515 loopback verified on hardware
+- [x] MCP2515 loopback verified on hardware
 - [ ] First vehicle connection: RPM request → real response
 - [ ] Full PID set logged during an idle session
 - [ ] OLED live display
