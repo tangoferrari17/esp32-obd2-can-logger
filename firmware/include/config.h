@@ -12,6 +12,11 @@ constexpr int PIN_SPI_MOSI = 23;
 constexpr int PIN_CAN_CS = 5;   // MCP2515 CS
 constexpr int PIN_SD_CS  = 15;  // microSD CS
 
+// ---- I2C (SSD1306 OLED) ----
+constexpr int PIN_I2C_SDA = 33;
+constexpr int PIN_I2C_SCL = 32;
+constexpr uint8_t OLED_ADDR = 0x3C;
+
 // ---- MCP2515 ----
 // Most blue MCP2515/TJA1050 modules carry an 8 MHz crystal (read the can on the board:
 // "8.000" = 8 MHz). Using the wrong value here silently produces the wrong bitrate and

@@ -68,7 +68,7 @@ ms,pid,name,value,unit,ecu,raw_hex,status
 | MCP2515 + TJA1050 module | CAN controller + transceiver | SPI |
 | OBD-II male pigtail | Physical tap into the diagnostic port | CAN-H/L, 12V, GND |
 | microSD breakout + card | Data storage | SPI (shared bus) |
-| SSD1306 0.96" OLED | Live readout *(planned)* | I²C |
+| SSD1306 0.96" two-color OLED (128×64) | Live readout *(wired and verified on the bench; logger integration planned)* | I²C |
 | NEO-6M GPS | Position and speed reference *(planned)* | UART |
 | Buck converter 12V→5V + inline 1–2 A fuse | Vehicle power *(planned)* | — |
 
@@ -82,6 +82,9 @@ ms,pid,name,value,unit,ecu,raw_hex,status
 | GPIO 5 | MCP2515 CS | |
 | GPIO 15 | SD CS | |
 | 5V / GND | MCP2515 VCC / GND, SD VCC / GND | |
+| GPIO 33 | OLED SDA | I²C data, device address `0x3C` |
+| GPIO 32 | OLED SCL | I²C clock |
+| 3V3 / GND | OLED VCC / GND | The OLED runs from 3.3V, not the 5V rail |
 
 | OBD-II pin | Signal | Goes to |
 |---|---|---|
@@ -135,6 +138,7 @@ pio device monitor             # 115200 baud
 - [x] MCP2515 loopback verified on hardware
 - [ ] First vehicle connection: RPM request → real response
 - [ ] Full PID set logged during an idle session
+- [x] OLED wired and verified on the bench (I²C scan finds `0x3C`, text renders)
 - [ ] OLED live display
 - [ ] GPS position/speed logged alongside CAN data
 - [ ] Self-powered from the vehicle (fused 12V + buck converter)

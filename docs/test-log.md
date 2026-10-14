@@ -28,3 +28,10 @@ One entry per bench or vehicle session. Record what was tried, what happened and
 **Not yet verified:** the CAN bitrate/crystal setting (loopback is internal and does not exercise it), and the contents of the CSV on a computer (no card reader yet).
 **Evidence:** serial output of the passing loopback and `Logging to /log_001.csv`.
 **Next:** Read the CSV on a laptop; first vehicle connection (parked, ignition on) with a real RPM response.
+
+### 2026-10-13 — Bench: SSD1306 OLED on I2C
+**Goal:** Wire the OLED and confirm the ESP32 can address it and draw text.
+**Setup:** OLED VCC to 3V3, GND to GND, SDA to GPIO 33, SCL to GPIO 32 (moved off the default 21/22 for wiring layout). USB power. CAN-H/CAN-L not connected. Standalone Arduino sketches, not yet part of the logger firmware.
+**Result:** An I2C scan found one device at `0x3C`. A second sketch initialised the display with Adafruit SSD1306 + GFX and rendered text on screen. The panel is two-color (yellow and blue bands); band boundaries are noted in the bench sketch for layout later.
+**Not yet verified:** the OLED has not been driven by the logger firmware or shown live CAN data.
+**Next:** Add a small display module to the logger (SD/CAN status, row count, then live PID values). Still open from the Oct 9 entry: CSV contents on a computer, then the first vehicle connection.
