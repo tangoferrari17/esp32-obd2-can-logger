@@ -35,3 +35,11 @@ One entry per bench or vehicle session. Record what was tried, what happened and
 **Result:** An I2C scan found one device at `0x3C`. A second sketch initialised the display with Adafruit SSD1306 + GFX and rendered text on screen. The panel is two-color (yellow and blue bands); band boundaries are noted in the bench sketch for layout later.
 **Not yet verified:** the OLED has not been driven by the logger firmware or shown live CAN data.
 **Next:** Add a small display module to the logger (SD/CAN status, row count, then live PID values). Still open from the Oct 9 entry: CSV contents on a computer, then the first vehicle connection.
+
+### 2026-10-15 — Bench: SD logging in the combined sketch (SdFat)
+**Goal:** Log one row per second to the SD card from a combined bench sketch (MCP2515 loopback + OLED + SD) and read it back over Serial.
+**Setup:** Standalone Arduino sketch `MCP2515-OLED-SD` (not part of the PlatformIO firmware tree). MCP2515 in loopback mode, OLED on GPIO 33/32, SD CS on GPIO 15, shared SPI bus, USB power. CAN-H/CAN-L not connected. SD library: SdFat, `SdSpiConfig(15, SHARED_SPI, SD_SCK_MHZ(16))`.
+**Result:** Rows of `ms, rpm` written once per second and read back on the next boot with `dumpLog()`: timestamps 1000 ms apart, RPM 1726 on every row (the loopback test frame). The OLED showed the same RPM.
+**What was learned about the card:** The 64 GB card ships exFAT. The ESP32 Arduino `SD` library failed to mount it even after a FAT32 format (`f_mount failed: (13) There is no valid FAT volume`), while SdFat's SdInfo reported FAT32 and SdFat mounted and wrote to it. The FAT32 format was done with SdFat's SdFormatter example, with the exFAT branch of `formatCard()` replaced by `fatFormatter` and `SPI_CLOCK` lowered from 50 MHz to 16 MHz (at 50 MHz the formatter failed with a `READ_TOKEN` error on the breadboard wiring).
+**Not yet verified:** the PlatformIO firmware still uses the ESP32 `SD` library, so it has not been run against this card. The CAN bitrate on a real bus is still unverified.
+**Next:** Move the firmware's SD logging to SdFat (or use a card of 32 GB or less); identify the OBD-II pigtail wires and connect CAN-H/CAN-L to the module; first vehicle connection.
