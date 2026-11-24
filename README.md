@@ -129,6 +129,15 @@ pio device monitor             # 115200 baud
 
 > Check the crystal on your MCP2515 module (it's printed on the metal can). Most blue modules are **8 MHz**. If yours is 16 MHz, change `CAN_CRYSTAL` in `config.h`, or the bitrate will be wrong and nothing will answer.
 
+## Stack and tools
+
+| Area | Tools |
+|---|---|
+| Firmware | C++ (Arduino framework on ESP32), [autowp-mcp2515](https://github.com/autowp/arduino-mcp2515), Arduino SD library (SdFat on the bench) |
+| Build and test | PlatformIO, Unity unit tests (native host build), GitHub Actions CI |
+| Editor | VS Code + PlatformIO extension |
+| AI assistance | Claude (Anthropic), used as a coding and documentation assistant |
+
 ## Troubleshooting
 
 **SD card does not mount.** Cards larger than 32 GB ship formatted exFAT, which the Arduino `SD` library does not support. A card of 32 GB or less formatted FAT32 is the simplest fix. A 64 GB card can be formatted FAT32 with the SdFat library's `SdFormatter` example: replace the exFAT branch in `formatCard()` with `fatFormatter.format(...)` and lower `SPI_CLOCK` to 16 MHz for breadboard wiring (50 MHz gave `READ_TOKEN` errors). On the 64 GB card used here, a card formatted this way mounted and logged correctly under SdFat but failed to mount under the ESP32 `SD` library (`f_mount failed: (13) There is no valid FAT volume`). Run SdFat's `SdInfo` example to see which volume type the card really has.
