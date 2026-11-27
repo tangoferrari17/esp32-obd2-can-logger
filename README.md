@@ -149,6 +149,7 @@ pio device monitor             # 115200 baud
 - [x] OBD-II protocol layer + unit tests in CI
 - [x] Logger firmware: loopback self-test, PID polling, CSV logging
 - [x] MCP2515 loopback verified on hardware
+- [x] OBD-II pigtail wired to MCP2515 (continuity-verified on the bench; no vehicle connection yet)
 - [ ] First vehicle connection: RPM request → real response
 - [ ] Full PID set logged during an idle session
 - [x] OLED wired and verified on the bench (I²C scan finds `0x3C`, text renders)
